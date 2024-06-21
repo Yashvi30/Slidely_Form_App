@@ -36,4 +36,5 @@
         ' Ensure the form can capture keydown events
         Me.KeyPreview = True
     End Sub
+
 End Class

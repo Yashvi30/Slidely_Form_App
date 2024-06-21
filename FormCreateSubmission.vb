@@ -8,6 +8,9 @@ Public Class FormCreateSubmission
     Private stopwatchStartTime As DateTime
     Private stopwatchElapsed As TimeSpan = TimeSpan.Zero
 
+    Private submissions As List(Of Submission) ' Declare submissions list
+    Private currentIndex As Integer = 0 ' Declare currentIndex
+
     ' Timer to update the stopwatch display
     Private WithEvents updateTimer As New Timer()
 
@@ -21,6 +24,8 @@ Public Class FormCreateSubmission
         lblStopwatch.Text = "00:00:00"
         ' Ensure the form can capture keydown events
         Me.KeyPreview = True
+
+
     End Sub
 
     ' Event handler for the stopwatch button click
@@ -55,7 +60,7 @@ Public Class FormCreateSubmission
         Dim finalStopwatchTime As String = lblStopwatch.Text
 
         ' Create a new submission
-        Dim newSubmission As New Form1.Submission With {
+        Dim newSubmission As New Submission With {
             .Name = txtName.Text,
             .Email = txtEmail.Text,
             .Phone = txtPhone.Text,
@@ -66,19 +71,41 @@ Public Class FormCreateSubmission
         ' Convert the submission to JSON
         Dim jsonSubmission As String = JsonConvert.SerializeObject(newSubmission)
 
-        ' Send the submission to the backend
-        Using client As New HttpClient()
-            Dim content As New StringContent(jsonSubmission, Encoding.UTF8, "application/json")
-            Dim response As HttpResponseMessage = Await client.PostAsync("http://localhost:3000/submit", content)
-            If response.IsSuccessStatusCode Then
-                MessageBox.Show("Submission Created Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("Error creating submission", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
-        End Using
+        ' Send the submission to the backend asynchronously
+        Await CreateSubmission(jsonSubmission)
 
-        ' Close the form
+        ' Close the form or perform other actions as needed
         Me.Close()
+    End Sub
+
+    ' Asynchronous function to create a submission
+    Private Async Function CreateSubmission(jsonSubmission As String) As Task
+        Try
+            Using client As New HttpClient()
+                Dim content As New StringContent(jsonSubmission, Encoding.UTF8, "application/json")
+                Dim response As HttpResponseMessage = Await client.PostAsync("http://localhost:3000/submit", content)
+
+                If response.IsSuccessStatusCode Then
+                    MessageBox.Show("Submission Created Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Else
+                    MessageBox.Show("Error creating submission", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show($"Error creating submission: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
+
+    ' Display the current submission
+    Private Sub DisplaySubmission()
+        ' Implement your logic to display submissions as needed
+        ' For example:
+        ' If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
+        '     Dim currentSubmission = submissions(currentIndex)
+        '     ' Display currentSubmission in your form controls
+        ' End If
     End Sub
 
     ' Handle keydown events for shortcuts
@@ -89,4 +116,13 @@ Public Class FormCreateSubmission
             btnSubmit.PerformClick()
         End If
     End Sub
+End Class
+
+' Define your Submission class here (adjust as per your actual class structure)
+Public Class Submission
+    Public Property Name As String
+    Public Property Email As String
+    Public Property Phone As String
+    Public Property GitHub As String
+    Public Property StopwatchTime As String
 End Class
