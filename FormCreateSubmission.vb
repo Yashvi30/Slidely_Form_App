@@ -8,9 +8,6 @@ Public Class FormCreateSubmission
     Private stopwatchStartTime As DateTime
     Private stopwatchElapsed As TimeSpan = TimeSpan.Zero
 
-    Private submissions As List(Of Submission) ' Declare submissions list
-    Private currentIndex As Integer = 0 ' Declare currentIndex
-
     ' Timer to update the stopwatch display
     Private WithEvents updateTimer As New Timer()
 
@@ -24,8 +21,6 @@ Public Class FormCreateSubmission
         lblStopwatch.Text = "00:00:00"
         ' Ensure the form can capture keydown events
         Me.KeyPreview = True
-
-
     End Sub
 
     ' Event handler for the stopwatch button click
@@ -70,24 +65,22 @@ Public Class FormCreateSubmission
 
         ' Convert the submission to JSON
         Dim jsonSubmission As String = JsonConvert.SerializeObject(newSubmission)
+        Dim content As New StringContent(jsonSubmission, Encoding.UTF8, "application/json")
 
         ' Send the submission to the backend asynchronously
-        Await CreateSubmission(jsonSubmission)
-
-        ' Close the form or perform other actions as needed
-        Me.Close()
+        Await CreateSubmission(content)
     End Sub
 
     ' Asynchronous function to create a submission
-    Private Async Function CreateSubmission(jsonSubmission As String) As Task
+    Private Async Function CreateSubmission(content As StringContent) As Task
         Try
             Using client As New HttpClient()
-                Dim content As New StringContent(jsonSubmission, Encoding.UTF8, "application/json")
                 Dim response As HttpResponseMessage = Await client.PostAsync("http://localhost:3000/submit", content)
 
                 If response.IsSuccessStatusCode Then
                     MessageBox.Show("Submission Created Successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
+                    ' Clear input fields and reset stopwatch
+                    ClearFields()
                 Else
                     MessageBox.Show("Error creating submission", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -97,15 +90,21 @@ Public Class FormCreateSubmission
         End Try
     End Function
 
+    ' Helper method to clear input fields and reset stopwatch
+    Private Sub ClearFields()
+        txtName.Clear()
+        txtEmail.Clear()
+        txtPhone.Clear()
+        txtGitHub.Clear()
+        ResetStopwatch()
+    End Sub
 
-    ' Display the current submission
-    Private Sub DisplaySubmission()
-        ' Implement your logic to display submissions as needed
-        ' For example:
-        ' If submissions IsNot Nothing AndAlso submissions.Count > 0 Then
-        '     Dim currentSubmission = submissions(currentIndex)
-        '     ' Display currentSubmission in your form controls
-        ' End If
+    ' Helper method to reset the stopwatch
+    Private Sub ResetStopwatch()
+        stopwatchRunning = False
+        stopwatchElapsed = TimeSpan.Zero
+        lblStopwatch.Text = "00:00:00"
+        btnStopwatch.Text = "Start Stopwatch"
     End Sub
 
     ' Handle keydown events for shortcuts

@@ -34,7 +34,7 @@ Partial Class Form1
         btnViewSubmissions.Name = "btnViewSubmissions"
         btnViewSubmissions.Size = New Size(243, 45)
         btnViewSubmissions.TabIndex = 0
-        btnViewSubmissions.Text = "View Submissions (Ctrl + S)"
+        btnViewSubmissions.Text = "View Submissions (Ctrl + V)"
         btnViewSubmissions.UseVisualStyleBackColor = False
         ' 
         ' btnCreateSubmission
