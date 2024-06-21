@@ -35,12 +35,16 @@ Partial Class FormViewSubmissions
         Label4 = New Label()
         Label5 = New Label()
         Label6 = New Label()
+        btnEdit = New Button()
+        btnDelete = New Button()
+        lblResponse = New Label()
+        lblLimitReached = New Label()
         SuspendLayout()
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(235, 45)
+        Label2.Location = New Point(237, 27)
         Label2.Name = "Label2"
         Label2.Size = New Size(300, 20)
         Label2.TabIndex = 1
@@ -49,9 +53,9 @@ Partial Class FormViewSubmissions
         ' btnPrevious
         ' 
         btnPrevious.BackColor = Color.Moccasin
-        btnPrevious.Location = New Point(235, 368)
+        btnPrevious.Location = New Point(231, 355)
         btnPrevious.Name = "btnPrevious"
-        btnPrevious.Size = New Size(133, 52)
+        btnPrevious.Size = New Size(158, 41)
         btnPrevious.TabIndex = 2
         btnPrevious.Text = "Previous (Ctrl+ P)"
         btnPrevious.UseVisualStyleBackColor = False
@@ -59,9 +63,9 @@ Partial Class FormViewSubmissions
         ' btnNext
         ' 
         btnNext.BackColor = Color.LightSkyBlue
-        btnNext.Location = New Point(413, 368)
+        btnNext.Location = New Point(395, 355)
         btnNext.Name = "btnNext"
-        btnNext.Size = New Size(125, 52)
+        btnNext.Size = New Size(142, 41)
         btnNext.TabIndex = 3
         btnNext.Text = "Next (Ctrl+ N)"
         btnNext.UseVisualStyleBackColor = False
@@ -69,7 +73,7 @@ Partial Class FormViewSubmissions
         ' txtName
         ' 
         txtName.BackColor = SystemColors.InactiveCaption
-        txtName.Location = New Point(335, 94)
+        txtName.Location = New Point(335, 68)
         txtName.Name = "txtName"
         txtName.Size = New Size(202, 27)
         txtName.TabIndex = 4
@@ -77,7 +81,7 @@ Partial Class FormViewSubmissions
         ' txtEmail
         ' 
         txtEmail.BackColor = SystemColors.InactiveCaption
-        txtEmail.Location = New Point(335, 145)
+        txtEmail.Location = New Point(335, 119)
         txtEmail.Name = "txtEmail"
         txtEmail.Size = New Size(202, 27)
         txtEmail.TabIndex = 5
@@ -85,7 +89,7 @@ Partial Class FormViewSubmissions
         ' txtPhone
         ' 
         txtPhone.BackColor = SystemColors.InactiveCaption
-        txtPhone.Location = New Point(333, 204)
+        txtPhone.Location = New Point(333, 178)
         txtPhone.Name = "txtPhone"
         txtPhone.Size = New Size(204, 27)
         txtPhone.TabIndex = 6
@@ -93,7 +97,7 @@ Partial Class FormViewSubmissions
         ' txtGitHub
         ' 
         txtGitHub.BackColor = SystemColors.InactiveCaption
-        txtGitHub.Location = New Point(334, 255)
+        txtGitHub.Location = New Point(334, 229)
         txtGitHub.Name = "txtGitHub"
         txtGitHub.Size = New Size(203, 27)
         txtGitHub.TabIndex = 7
@@ -101,7 +105,7 @@ Partial Class FormViewSubmissions
         ' txtStopwatchTime
         ' 
         txtStopwatchTime.BackColor = SystemColors.InactiveCaption
-        txtStopwatchTime.Location = New Point(335, 308)
+        txtStopwatchTime.Location = New Point(335, 282)
         txtStopwatchTime.Name = "txtStopwatchTime"
         txtStopwatchTime.Size = New Size(202, 27)
         txtStopwatchTime.TabIndex = 8
@@ -109,7 +113,7 @@ Partial Class FormViewSubmissions
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(233, 94)
+        Label1.Location = New Point(233, 68)
         Label1.Name = "Label1"
         Label1.Size = New Size(49, 20)
         Label1.TabIndex = 9
@@ -118,7 +122,7 @@ Partial Class FormViewSubmissions
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(233, 152)
+        Label3.Location = New Point(233, 126)
         Label3.Name = "Label3"
         Label3.Size = New Size(46, 20)
         Label3.TabIndex = 10
@@ -127,7 +131,7 @@ Partial Class FormViewSubmissions
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(233, 211)
+        Label4.Location = New Point(233, 185)
         Label4.Name = "Label4"
         Label4.Size = New Size(50, 20)
         Label4.TabIndex = 11
@@ -136,7 +140,7 @@ Partial Class FormViewSubmissions
         ' Label5
         ' 
         Label5.AutoSize = True
-        Label5.Location = New Point(232, 251)
+        Label5.Location = New Point(232, 225)
         Label5.Name = "Label5"
         Label5.Size = New Size(80, 40)
         Label5.TabIndex = 12
@@ -145,17 +149,59 @@ Partial Class FormViewSubmissions
         ' Label6
         ' 
         Label6.AutoSize = True
-        Label6.Location = New Point(233, 305)
+        Label6.Location = New Point(233, 279)
         Label6.Name = "Label6"
         Label6.Size = New Size(83, 40)
         Label6.TabIndex = 13
         Label6.Text = "Stopwatch " & vbCrLf & "Time"
+        ' 
+        ' btnEdit
+        ' 
+        btnEdit.BackColor = Color.Aquamarine
+        btnEdit.Location = New Point(231, 399)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(158, 32)
+        btnEdit.TabIndex = 14
+        btnEdit.Text = "Edit Submission"
+        btnEdit.UseVisualStyleBackColor = False
+        ' 
+        ' btnDelete
+        ' 
+        btnDelete.BackColor = Color.LightCoral
+        btnDelete.ForeColor = SystemColors.ActiveCaptionText
+        btnDelete.Location = New Point(395, 399)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(142, 32)
+        btnDelete.TabIndex = 15
+        btnDelete.Text = "Delete"
+        btnDelete.UseVisualStyleBackColor = False
+        ' 
+        ' lblResponse
+        ' 
+        lblResponse.AutoSize = True
+        lblResponse.Location = New Point(607, 344)
+        lblResponse.Name = "lblResponse"
+        lblResponse.Size = New Size(0, 20)
+        lblResponse.TabIndex = 16
+        ' 
+        ' lblLimitReached
+        ' 
+        lblLimitReached.AutoSize = True
+        lblLimitReached.Location = New Point(361, 323)
+        lblLimitReached.Name = "lblLimitReached"
+        lblLimitReached.Size = New Size(12, 20)
+        lblLimitReached.TabIndex = 17
+        lblLimitReached.Text = "."
         ' 
         ' FormViewSubmissions
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(lblLimitReached)
+        Controls.Add(lblResponse)
+        Controls.Add(btnDelete)
+        Controls.Add(btnEdit)
         Controls.Add(Label6)
         Controls.Add(Label5)
         Controls.Add(Label4)
@@ -187,4 +233,8 @@ Partial Class FormViewSubmissions
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
+    Friend WithEvents btnEdit As Button
+    Friend WithEvents btnDelete As Button
+    Friend WithEvents lblResponse As Label
+    Friend WithEvents lblLimitReached As Label
 End Class
